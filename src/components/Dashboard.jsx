@@ -2,10 +2,18 @@ import React from "react";
 import { Button } from "@mui/material";
 import { TransactionForm } from "./TransactionForm";
 import { TransactionsList } from "./TransactionsList";
+import { useDispatch } from "react-redux";
+import { sagaActions } from "../store/sagaActions";
 
 export const Dashboard = () => {
   const [showExpenseForm, setShowExpenseForm] = React.useState(false);
   const [isCreateForm, setIsCreateForm] = React.useState(true);
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch({ type: sagaActions.FETCH_TRANSACTIONS });
+  }, []);
 
   const handleCreatButtonClick = () => {
     setShowExpenseForm(true);

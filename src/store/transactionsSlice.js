@@ -10,7 +10,9 @@ export const transactionsSlice = createSlice({
       state.transactions = action.payload;
     },
     addTransaction: (state, action) => {
-      state.transactions = [...state.transactions, action.payload];
+      if (state.transactions)
+        state.transactions = [...state.transactions, action.payload];
+      else state.transactions = [action.payload];
     },
   },
 });

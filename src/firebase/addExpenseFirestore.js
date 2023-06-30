@@ -6,7 +6,7 @@ export const postTransaction = async (transaction) => {
     const transactionsCollection = collection(db, "transactions");
     const docRef = await addDoc(transactionsCollection, transaction);
     console.log("new transaction added : ", docRef.id);
-    return transaction;
+    return { ...transaction, id: docRef.id };
   } catch (error) {
     console.error("aaaa", error);
   }

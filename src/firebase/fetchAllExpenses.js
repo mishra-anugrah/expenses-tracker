@@ -1,10 +1,16 @@
 import { db } from "./firebase";
-import { collection, query, onSnapshot } from "firebase/firestore";
+import { collection, query, getDocs } from "firebase/firestore";
 
-export const fetchAllTransactions = () => {
+export const fetchAllTransactions = async () => {
   const q = query(collection(db, "transactions"));
-  onSnapshot(q, (querySnapshot) => {
-    const data = querySnapshot.docs.map((doc) => doc.data());
-    return data;
-  });
+  const transactions = [];
+
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => transactions.push(doc.data()));
+
+  // onSnapshot(q, (querySnapshot) => {
+  //   transactions.concat(querySnapshot.docs.map((doc) => doc.data()));
+  // });
+
+  return transactions;
 };

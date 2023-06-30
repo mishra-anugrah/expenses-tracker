@@ -47,7 +47,7 @@ export const TransactionForm = (props) => {
     console.log("submitting", transactionData);
     dispatch({
       type: sagaActions.SET_TRANSACTIONS,
-      payload: { ...transactionData, id: new Date().getTime() },
+      payload: transactionData,
     });
   };
 
