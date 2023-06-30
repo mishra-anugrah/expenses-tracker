@@ -1,0 +1,74 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.transaction-form {
+
+    display: flex;
+    flex-direction: column;
+    // width: 40%;
+
+    &__controls {
+        width: fit-content;
+        justify-self: right;
+    }
+
+
+    &__controls {
+        width: 100%;
+        margin: 15px 0;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__buttons {
+        button {
+            margin-right: 5px
+        }
+    }
+
+    .transaction-field {
+        margin: 10px 0;
+    }
+
+    .income-input {
+        .MuiInputBase-root {
+            box-shadow: inset -10px 0 0 green;
+        }
+    }
+
+    .expense-input {
+        .MuiInputBase-root {
+            box-shadow: inset -10px 0 0 red;
+        }
+    }
+
+    .justify-end {
+        justify-self: flex-end;
+    }
+
+    input::-webkit-inner-spin-button,
+    input::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
+
+.transactions-list {
+    .income-item {
+        // box-shadow: inset -10px 0 0 green;
+        color: green;
+    }
+
+    .expense-item {
+        // box-shadow: inset -10px 0 0 red;
+        color: red;
+    }
+}
+
+.transaction-container {
+    display: flex;
+}
