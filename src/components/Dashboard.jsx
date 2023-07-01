@@ -13,6 +13,7 @@ import {
 } from "../store/transactionsSlice";
 import { Search } from "./Search";
 import { debounce } from "lodash";
+import { Chart } from "./Chart";
 
 export const Dashboard = () => {
   const [showExpenseForm, setShowExpenseForm] = React.useState(false);
@@ -85,6 +86,7 @@ export const Dashboard = () => {
         setSearchQuery={setSearchQuery}
         searchTransactions={searchTransactions}
       />
+      <Chart summary={summary} />
       <div className="dashboard__controls">
         <Button variant="contained" onClick={handleCreatButtonClick}>
           Add new
