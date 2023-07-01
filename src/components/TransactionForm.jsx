@@ -10,24 +10,42 @@ import { sagaActions } from "../store/sagaActions";
 import { useSelector, useDispatch } from "react-redux";
 
 export const TransactionForm = (props) => {
-  const { isNew, setShowExpenseForm } = props;
+  const { setShowExpenseForm } = props;
 
   const [isExpense, setIsExpense] = React.useState(false);
   const [transactionData, setTransactionData] = React.useState({
     isExpense: isExpense,
+    title: "",
+    description: "",
+    amount: "",
+    category: "",
   });
+  const [formErrors, setFormErrors] = React.useState([]);
 
-  const transactions = useSelector((state) => state.transactions);
-  console.log("ttttttttttttt ", transactions);
+  const [isNewForm, setIsNewForm] = React.useState();
 
   const dispatch = useDispatch();
 
+  const selectedTransactionToEdit = useSelector(
+    (state) => state.transactions.selectedTransaction
+  );
+
+  React.useEffect(() => {
+    if (selectedTransactionToEdit) {
+      setIsNewForm(false);
+      setTransactionData(selectedTransactionToEdit);
+      setIsExpense(selectedTransactionToEdit.isExpense);
+    } else {
+      setIsNewForm(true);
+    }
+  }, [selectedTransactionToEdit]);
+
   const formTitle = React.useMemo(() => {
-    if (isNew) {
+    if (isNewForm) {
       return `Add new ${isExpense ? "expense" : "income"}`;
     }
     return `Edit`;
-  }, [isExpense, isNew]);
+  }, [isExpense, isNewForm]);
 
   const handleFormValueChange = (event) => {
     const newData = { ...transactionData };
@@ -43,20 +61,49 @@ export const TransactionForm = (props) => {
     setShowExpenseForm(false);
   };
 
-  const handleAddTransaction = () => {
+  const handleSaveTransaction = () => {
     console.log("submitting", transactionData);
-    dispatch({
-      type: sagaActions.SET_TRANSACTIONS,
-      payload: transactionData,
-    });
+    const [date, time] = new Date().toLocaleString().split(",");
+
+    const payload = {
+      ...transactionData,
+      date,
+      time,
+    };
+
+    if (isValidForm(payload)) {
+      if (isNewForm) {
+        // add new transaction
+        dispatch({
+          type: sagaActions.SET_TRANSACTIONS,
+          payload,
+        });
+      } else {
+        // edit transaction
+        dispatch({ type: sagaActions.UPDATE_TRANSACTION, payload });
+      }
+      setTransactionData({});
+      setShowExpenseForm(false);
+    }
+  };
+
+  const isValidForm = (formData) => {
+    const mandatoryFields = ["title", "amount", "category"];
+
+    const errors = [];
+
+    for (const [key, value] of Object.entries(formData)) {
+      if (mandatoryFields.includes(key) && !value) {
+        errors.push(key);
+      }
+    }
+
+    setFormErrors(errors);
+    return !errors.length;
   };
 
   return (
     <div className="transaction-form">
-      {/* <Typography variant="h4">{`Add new ${
-        isExpense ? "expense" : "income"
-      }`}</Typography> */}
-
       <Typography variant="h4">{formTitle}</Typography>
       <div className="transaction-form__controls">
         <div className="expense-toggle">
@@ -77,6 +124,9 @@ export const TransactionForm = (props) => {
           onChange={handleFormValueChange}
           name="title"
           className="transaction-field"
+          InputLabelProps={{ shrink: true }}
+          required
+          error={formErrors.includes("title")}
         />
 
         <TextField
@@ -88,6 +138,9 @@ export const TransactionForm = (props) => {
             isExpense ? "expense-input" : "income-input"
           }`}
           type="number"
+          InputLabelProps={{ shrink: true }}
+          error={formErrors.includes("amount")}
+          required
         />
 
         <TextField
@@ -96,6 +149,9 @@ export const TransactionForm = (props) => {
           onChange={handleFormValueChange}
           name="category"
           className="transaction-field"
+          InputLabelProps={{ shrink: true }}
+          error={formErrors.includes("category")}
+          required
         />
 
         <TextField
@@ -105,14 +161,23 @@ export const TransactionForm = (props) => {
           name="description"
           className="transaction-field"
           multiline
+          InputLabelProps={{ shrink: true }}
         />
       </FormControl>
+
+      {formErrors.length ? (
+        <Typography sx={{ color: "red" }}>
+          * Please fill all mandatory fields
+        </Typography>
+      ) : (
+        <></>
+      )}
 
       <div className="transaction-form__buttons">
         <Button
           className="justify-end"
           variant="contained"
-          onClick={handleAddTransaction}
+          onClick={handleSaveTransaction}
         >
           Submit
         </Button>

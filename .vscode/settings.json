@@ -1,0 +1,5 @@
+{
+    "editor.formatOnSaveMode": "file",
+    "prettier.bracketSpacing": true,
+    "editor.formatOnSave": true
+}

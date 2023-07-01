@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { Button } from "@mui/material";
 import { TransactionForm } from "./TransactionForm";
@@ -37,7 +38,7 @@ export const Dashboard = () => {
           <></>
         )}
 
-        <TransactionsList />
+        <TransactionsList setShowExpenseForm={setShowExpenseForm} />
       </div>
     </div>
   );

@@ -6,7 +6,9 @@ export const fetchAllTransactions = async () => {
   const transactions = [];
 
   const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => transactions.push(doc.data()));
+  querySnapshot.forEach((doc) =>
+    transactions.push({ ...doc.data(), id: doc.id })
+  );
 
   // onSnapshot(q, (querySnapshot) => {
   //   transactions.concat(querySnapshot.docs.map((doc) => doc.data()));

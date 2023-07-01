@@ -9,7 +9,10 @@
 
     display: flex;
     flex-direction: column;
-    // width: 40%;
+    width: 80%;
+    padding: 20px;
+    margin: 20px;
+    background-color: #dedede46;
 
     &__controls {
         width: fit-content;
@@ -25,8 +28,10 @@
     }
 
     &__buttons {
+        text-align: right;
+
         button {
-            margin-right: 5px
+            margin-right: 10px
         }
     }
 
@@ -57,18 +62,82 @@
     }
 }
 
-.transactions-list {
-    .income-item {
-        // box-shadow: inset -10px 0 0 green;
-        color: green;
-    }
-
-    .expense-item {
-        // box-shadow: inset -10px 0 0 red;
-        color: red;
-    }
-}
-
 .transaction-container {
-    display: flex;
+    width: 50%;
+
+    .transactions-list {
+        padding: 20px;
+        margin: 20px;
+
+        .transaction-item {
+            box-shadow: inset 10px 0 0;
+            margin: 5px;
+            padding: 10px 20px;
+        }
+
+        .income-item {
+            background-color: #8fbc8f24;
+            color: green;
+        }
+
+        .expense-item {
+            background-color: #bc8f8f24;
+            color: red;
+        }
+
+        .transaction-card {
+            width: 100%;
+
+            hr {
+                margin-top: 10px;
+            }
+
+            .transaction-category {
+                margin: 10px;
+
+                &.income-category {
+                    border-color: green;
+                    color: green;
+                }
+
+                &.expense-category {
+                    border-color: red;
+                    color: red;
+                }
+            }
+
+            .card-controls {
+                display: flex;
+                position: absolute;
+                left: 100%;
+                transform: translate(-150%, -7px);
+
+            }
+
+            .transaction-date-time {
+                text-align: right;
+            }
+
+            .delete-confirmation {
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                background-color: #ffffffbd;
+                color: red;
+
+                &__content {
+                    height: 40%;
+                    width: 60%;
+                    background-color: #fff;
+                    box-shadow: 0 0 40px 9px #ff00002e;
+                    color: #9b3737;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    row-gap: 15px;
+                }
+            }
+        }
+    }
 }

@@ -4,7 +4,9 @@ import { Transaction } from "./Transaction";
 import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
-export const TransactionsList = () => {
+export const TransactionsList = (props) => {
+  const { setShowExpenseForm } = props;
+
   const transactions = useSelector((state) => state.transactions.transactions);
 
   return (
@@ -13,7 +15,11 @@ export const TransactionsList = () => {
 
       <List>
         {transactions?.map((transaction) => (
-          <Transaction transaction={transaction} />
+          <Transaction
+            key={transaction.id}
+            transaction={transaction}
+            setShowExpenseForm={setShowExpenseForm}
+          />
         ))}
       </List>
     </div>
