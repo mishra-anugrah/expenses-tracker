@@ -10,9 +10,5 @@ export const fetchAllTransactions = async () => {
     transactions.push({ ...doc.data(), id: doc.id })
   );
 
-  // onSnapshot(q, (querySnapshot) => {
-  //   transactions.concat(querySnapshot.docs.map((doc) => doc.data()));
-  // });
-
   return transactions;
 };

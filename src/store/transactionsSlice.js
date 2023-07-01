@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { createSummaryDataUtil } from "../utils/util";
 
 export const transactionsSlice = createSlice({
   name: "transactions",
@@ -35,6 +36,31 @@ export const transactionsSlice = createSlice({
         (transaction) => transaction.id !== action.payload
       );
     },
+    createSummaryData: (state, action) => {
+      const { totalIncome, totalExpense } = createSummaryDataUtil(
+        action.payload
+      );
+
+      state.totalExpense = totalExpense;
+      state.totalIncome = totalIncome;
+    },
+    summaryDataAdd: (state, action) => {
+      state.totalIncome += action.payload.amount;
+      state.totalExpense += action.payload.amount;
+    },
+    updateSummaryData: (state, action) => {
+      state.totalExpense = action.payload.totalExpense;
+      state.totalIncome = action.payload.totalIncome;
+      // if (action.payload.isDelete) {
+      //   if (action.payload.isExpense)
+      //     state.totalExpense -= Number(action.payload.amount);
+      //   else state.totalIncome -= Number(action.payload.amount);
+      // } else {
+      //   if (action.payload.isExpense)
+      //     state.totalExpense += Number(action.payload.amount);
+      //   else state.totalIncome += Number(action.payload.amount);
+      // }
+    },
   },
 });
 
@@ -44,5 +70,8 @@ export const {
   setSelectedTransaction,
   updateTransaction,
   deleteTransaction,
+  createSummaryData,
+  updateSummaryData,
+  summaryDataAdd,
 } = transactionsSlice.actions;
 export default transactionsSlice.reducer;

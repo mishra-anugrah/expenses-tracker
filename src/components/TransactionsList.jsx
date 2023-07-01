@@ -2,12 +2,9 @@ import { List } from "@mui/material";
 import React from "react";
 import { Transaction } from "./Transaction";
 import { Typography } from "@mui/material";
-import { useSelector } from "react-redux";
 
 export const TransactionsList = (props) => {
-  const { setShowExpenseForm } = props;
-
-  const transactions = useSelector((state) => state.transactions.transactions);
+  const { setShowExpenseForm, transactions } = props;
 
   return (
     <div className="transactions-list">

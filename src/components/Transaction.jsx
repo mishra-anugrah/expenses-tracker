@@ -31,7 +31,7 @@ export const Transaction = (props) => {
   };
 
   const onDeleteConfirmation = () => {
-    dispatch({ type: sagaActions.DELETE_TRANSACTION, payload: transaction.id });
+    dispatch({ type: sagaActions.DELETE_TRANSACTION, payload: transaction });
   };
 
   const onDeleteButtonClick = () => {
@@ -50,7 +50,7 @@ export const Transaction = (props) => {
             <IconButton onClick={() => onEditClick(id)}>
               <Edit />
             </IconButton>
-            <IconButton onClick={() => onDeleteButtonClick(id)}>
+            <IconButton onClick={() => onDeleteButtonClick()}>
               <Delete />
             </IconButton>
           </div>
