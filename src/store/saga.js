@@ -5,7 +5,6 @@ import {
   updateTransaction,
   deleteTransaction,
   createSummaryData,
-  // updateSummaryData,
   summaryDataAdd,
   setSearchResults,
 } from "./transactionsSlice";
@@ -24,7 +23,6 @@ export function* storeTransactionSaga(action) {
     yield put(addTransaction(result));
     yield put(updateTransaction(action.payload));
     yield put(summaryDataAdd(action.payload));
-    // yield put(updateSummaryData(action.payload));
   } catch (error) {
     yield put({ type: sagaActions.SET_TRANSACTIONS_FAILED, error });
   }
@@ -44,7 +42,6 @@ export function* updateTransactionSaga(action) {
   try {
     yield call(() => updateTransactionFirebase(action.payload));
     yield put(updateTransaction(action.payload));
-    // yield put(updateSummaryData(action.payload));
   } catch (error) {
     yield put({ type: sagaActions.UPDATE_TRANSACTION_FAILED, error });
   }
@@ -54,7 +51,6 @@ export function* deleteTransactionSaga(action) {
   try {
     yield call(() => deleteTransactionFirebase(action.payload.id));
     yield put(deleteTransaction(action.payload.id));
-    // yield put(updateSummaryData({ ...action.payload, isDelete: true }));
   } catch (error) {
     yield put({ type: sagaActions.DELETE_TRANSACTION_FAILED, error });
   }

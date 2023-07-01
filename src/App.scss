@@ -4,64 +4,6 @@
     align-items: center;
 }
 
-
-.transaction-form {
-
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    padding: 20px;
-    margin: 20px auto;
-    background-color: #dedede46;
-
-    &__controls {
-        width: fit-content;
-        justify-self: right;
-    }
-
-
-    &__controls {
-        width: 100%;
-        margin: 15px 0;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    &__buttons {
-        text-align: right;
-
-        button {
-            margin-right: 10px
-        }
-    }
-
-    .transaction-field {
-        margin: 10px 0;
-    }
-
-    .income-input {
-        .MuiInputBase-root {
-            box-shadow: inset -10px 0 0 green;
-        }
-    }
-
-    .expense-input {
-        .MuiInputBase-root {
-            box-shadow: inset -10px 0 0 red;
-        }
-    }
-
-    .justify-end {
-        justify-self: flex-end;
-    }
-
-    input::-webkit-inner-spin-button,
-    input::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-}
-
 .transaction-container {
     width: 50%;
 
@@ -190,6 +132,83 @@
 .chart {
     margin-bottom: 30px;
 }
+
+.add-new {
+    position: sticky;
+    top: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: end;
+    z-index: 9;
+
+    .add-new__button {
+        width: fit-content;
+        margin-right: 20px;
+    }
+
+    .transaction-form {
+
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        padding: 20px;
+        margin: 20px;
+        background-color: #dedede;
+        border-radius: 20px;
+        box-shadow: 0 0 10px #dedede45;
+
+        &__controls {
+            width: fit-content;
+            justify-self: right;
+        }
+
+
+        &__controls {
+            width: 100%;
+            margin: 15px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &__buttons {
+            text-align: right;
+
+            button {
+                margin-right: 10px;
+                width: fit-content;
+            }
+        }
+
+        .transaction-field {
+            margin: 10px 0;
+        }
+
+        .income-input {
+            .MuiInputBase-root {
+                box-shadow: inset -10px 0 0 green;
+            }
+        }
+
+        .expense-input {
+            .MuiInputBase-root {
+                box-shadow: inset -10px 0 0 red;
+            }
+        }
+
+        .justify-end {
+            justify-self: flex-end;
+        }
+
+        input::-webkit-inner-spin-button,
+        input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    }
+
+}
+
 
 @media (max-width: 600px) {
     .transaction-container {

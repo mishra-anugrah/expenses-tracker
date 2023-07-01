@@ -52,15 +52,6 @@ export const transactionsSlice = createSlice({
     updateSummaryData: (state, action) => {
       state.totalExpense = action.payload.totalExpense;
       state.totalIncome = action.payload.totalIncome;
-      // if (action.payload.isDelete) {
-      //   if (action.payload.isExpense)
-      //     state.totalExpense -= Number(action.payload.amount);
-      //   else state.totalIncome -= Number(action.payload.amount);
-      // } else {
-      //   if (action.payload.isExpense)
-      //     state.totalExpense += Number(action.payload.amount);
-      //   else state.totalIncome += Number(action.payload.amount);
-      // }
     },
     setSearchResults: (state, action) => {
       state.searchResults = action.payload;

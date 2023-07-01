@@ -20,7 +20,6 @@ export const Dashboard = () => {
   const [isCreateForm, setIsCreateForm] = React.useState(true);
   const [summary, setSummary] = React.useState(null);
   const [searchQuery, setSearchQuery] = React.useState("");
-  // const [searchedTransactions, setSearchedTransactions] = React.useState(null);
 
   const dispatch = useDispatch();
 
@@ -56,12 +55,6 @@ export const Dashboard = () => {
     }
   }, [transactions]);
 
-  // React.useEffect(() => {
-  //   if (searchResults) {
-
-  //   }
-  // }, [searchResults]);
-
   const handleCreatButtonClick = () => {
     setShowExpenseForm(true);
     setIsCreateForm(true);
@@ -80,35 +73,48 @@ export const Dashboard = () => {
   );
 
   return (
-    <div className="dashboard">
-      <Search
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        searchTransactions={searchTransactions}
-      />
-      <Chart summary={summary} />
-      <div className="dashboard__controls">
-        <Button variant="contained" onClick={handleCreatButtonClick}>
-          Add new
-        </Button>
-      </div>
-      <div className="transaction-container">
+    <>
+      <div className="add-new">
         {showExpenseForm ? (
-          <TransactionForm
-            isNew={isCreateForm}
-            setShowExpenseForm={setShowExpenseForm}
-          />
+          <div className="transaction-form-container">
+            <TransactionForm
+              isNew={isCreateForm}
+              setShowExpenseForm={setShowExpenseForm}
+            />
+          </div>
         ) : (
           <></>
         )}
 
-        <TransactionSummary summaryData={summary} />
-
-        <TransactionsList
-          setShowExpenseForm={setShowExpenseForm}
-          transactions={searchResults ? searchResults : transactions}
-        />
+        {!showExpenseForm ? (
+          <Button
+            className="add-new__button"
+            variant="contained"
+            onClick={handleCreatButtonClick}
+          >
+            Add new
+          </Button>
+        ) : (
+          <></>
+        )}
       </div>
-    </div>
+      <div className="dashboard">
+        <Search
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          searchTransactions={searchTransactions}
+        />
+        <Chart summary={summary} />
+
+        <div className="transaction-container">
+          <TransactionSummary summaryData={summary} />
+
+          <TransactionsList
+            setShowExpenseForm={setShowExpenseForm}
+            transactions={searchResults ? searchResults : transactions}
+          />
+        </div>
+      </div>
+    </>
   );
 };

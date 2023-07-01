@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Backdrop,
   Button,
   FormControl,
   Switch,
@@ -103,88 +104,90 @@ export const TransactionForm = (props) => {
   };
 
   return (
-    <div className="transaction-form">
-      <Typography variant="h4">{formTitle}</Typography>
-      <div className="transaction-form__controls">
-        <div className="expense-toggle">
-          Income
-          <Switch
-            checked={isExpense}
+    <Backdrop open={true}>
+      <div className="transaction-form">
+        <Typography variant="h4">{formTitle}</Typography>
+        <div className="transaction-form__controls">
+          <div className="expense-toggle">
+            Income
+            <Switch
+              checked={isExpense}
+              onChange={handleFormValueChange}
+              name="isExpense"
+              value={isExpense}
+            />
+            Expense
+          </div>
+        </div>
+        <FormControl>
+          <TextField
+            label="Title"
+            value={transactionData.title}
             onChange={handleFormValueChange}
-            name="isExpense"
-            value={isExpense}
+            name="title"
+            className="transaction-field"
+            InputLabelProps={{ shrink: true }}
+            required
+            error={formErrors.includes("title")}
           />
-          Expense
+
+          <TextField
+            label="Amount"
+            value={transactionData.amount}
+            onChange={handleFormValueChange}
+            name="amount"
+            className={`transaction-field ${
+              isExpense ? "expense-input" : "income-input"
+            }`}
+            type="number"
+            InputLabelProps={{ shrink: true }}
+            error={formErrors.includes("amount")}
+            required
+          />
+
+          <TextField
+            label="Category"
+            value={transactionData.category}
+            onChange={handleFormValueChange}
+            name="category"
+            className="transaction-field"
+            InputLabelProps={{ shrink: true }}
+            error={formErrors.includes("category")}
+            required
+          />
+
+          <TextField
+            label="Description"
+            value={transactionData.description}
+            onChange={handleFormValueChange}
+            name="description"
+            className="transaction-field"
+            multiline
+            InputLabelProps={{ shrink: true }}
+          />
+        </FormControl>
+
+        {formErrors.length ? (
+          <Typography sx={{ color: "red" }}>
+            * Please fill all mandatory fields
+          </Typography>
+        ) : (
+          <></>
+        )}
+
+        <div className="transaction-form__buttons">
+          <Button
+            className="justify-end"
+            variant="contained"
+            onClick={handleSaveTransaction}
+          >
+            Submit
+          </Button>
+          <Button color="error" onClick={handleCancel}>
+            Cancel
+          </Button>
         </div>
       </div>
-      <FormControl>
-        <TextField
-          label="Title"
-          value={transactionData.title}
-          onChange={handleFormValueChange}
-          name="title"
-          className="transaction-field"
-          InputLabelProps={{ shrink: true }}
-          required
-          error={formErrors.includes("title")}
-        />
-
-        <TextField
-          label="Amount"
-          value={transactionData.amount}
-          onChange={handleFormValueChange}
-          name="amount"
-          className={`transaction-field ${
-            isExpense ? "expense-input" : "income-input"
-          }`}
-          type="number"
-          InputLabelProps={{ shrink: true }}
-          error={formErrors.includes("amount")}
-          required
-        />
-
-        <TextField
-          label="Category"
-          value={transactionData.category}
-          onChange={handleFormValueChange}
-          name="category"
-          className="transaction-field"
-          InputLabelProps={{ shrink: true }}
-          error={formErrors.includes("category")}
-          required
-        />
-
-        <TextField
-          label="Description"
-          value={transactionData.description}
-          onChange={handleFormValueChange}
-          name="description"
-          className="transaction-field"
-          multiline
-          InputLabelProps={{ shrink: true }}
-        />
-      </FormControl>
-
-      {formErrors.length ? (
-        <Typography sx={{ color: "red" }}>
-          * Please fill all mandatory fields
-        </Typography>
-      ) : (
-        <></>
-      )}
-
-      <div className="transaction-form__buttons">
-        <Button
-          className="justify-end"
-          variant="contained"
-          onClick={handleSaveTransaction}
-        >
-          Submit
-        </Button>
-        <Button color="error" onClick={handleCancel}>
-          Cancel
-        </Button>
-      </div>
-    </div>
+    </Backdrop>
   );
 };
