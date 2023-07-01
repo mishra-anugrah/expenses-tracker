@@ -8,6 +8,7 @@ export const transactionsSlice = createSlice({
     selectedTransaction: null,
     totalIncome: 0,
     totalExpense: 0,
+    searchResults: null,
   },
   reducers: {
     setTransactions: (state, action) => {
@@ -61,6 +62,9 @@ export const transactionsSlice = createSlice({
       //   else state.totalIncome += Number(action.payload.amount);
       // }
     },
+    setSearchResults: (state, action) => {
+      state.searchResults = action.payload;
+    },
   },
 });
 
@@ -73,5 +77,6 @@ export const {
   createSummaryData,
   updateSummaryData,
   summaryDataAdd,
+  setSearchResults,
 } = transactionsSlice.actions;
 export default transactionsSlice.reducer;

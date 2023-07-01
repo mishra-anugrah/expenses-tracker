@@ -19,6 +19,11 @@ export const TransactionsList = (props) => {
           />
         ))}
       </List>
+      {transactions && transactions.length === 0 ? (
+        <div>no results</div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

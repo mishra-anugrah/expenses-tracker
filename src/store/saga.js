@@ -7,12 +7,14 @@ import {
   createSummaryData,
   // updateSummaryData,
   summaryDataAdd,
+  setSearchResults,
 } from "./transactionsSlice";
 import { sagaActions } from "./sagaActions";
 import { postTransactionFirebase } from "../firebase/addExpenseFirestore";
 import { fetchAllTransactions } from "../firebase/fetchAllExpenses";
 import { updateTransactionFirebase } from "../firebase/updateTransactionFirebase";
 import { deleteTransactionFirebase } from "../firebase/deleteTransactionFirebase";
+import { searchTransactionFirebase } from "../firebase/searchTransactionFirebase";
 
 export function* storeTransactionSaga(action) {
   try {
@@ -58,9 +60,21 @@ export function* deleteTransactionSaga(action) {
   }
 }
 
+export function* searchTransactionsSaga(action) {
+  try {
+    const searchResults = yield call(() =>
+      searchTransactionFirebase(action.payload)
+    );
+    yield put(setSearchResults(searchResults));
+  } catch (error) {
+    yield put({ type: sagaActions.SEARCH_TRANSACTIONS_FAILED, error: error });
+  }
+}
+
 export default function* rootSaga() {
   yield takeEvery(sagaActions.SET_TRANSACTIONS, storeTransactionSaga);
   yield takeEvery(sagaActions.FETCH_TRANSACTIONS, fetchTransactionsSaga);
   yield takeEvery(sagaActions.UPDATE_TRANSACTION, updateTransactionSaga);
   yield takeEvery(sagaActions.DELETE_TRANSACTION, deleteTransactionSaga);
+  yield takeEvery(sagaActions.SEARCH_TRANSACTIONS, searchTransactionsSaga);
 }

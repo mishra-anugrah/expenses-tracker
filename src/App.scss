@@ -181,6 +181,12 @@
     }
 }
 
+.search {
+    .searchbar-icon {
+        cursor: pointer;
+    }
+}
+
 @media (max-width: 600px) {
     .transaction-container {
         width: 100%;

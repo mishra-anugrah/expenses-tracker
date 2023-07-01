@@ -7,12 +7,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { sagaActions } from "../store/sagaActions";
 import { TransactionSummary } from "./TransactionSummary";
 import { createSummaryDataUtil } from "../utils/util";
-import { updateSummaryData } from "../store/transactionsSlice";
+import {
+  setSearchResults,
+  updateSummaryData,
+} from "../store/transactionsSlice";
+import { Search } from "./Search";
+import { debounce } from "lodash";
 
 export const Dashboard = () => {
   const [showExpenseForm, setShowExpenseForm] = React.useState(false);
   const [isCreateForm, setIsCreateForm] = React.useState(true);
   const [summary, setSummary] = React.useState(null);
+  const [searchQuery, setSearchQuery] = React.useState("");
+  // const [searchedTransactions, setSearchedTransactions] = React.useState(null);
 
   const dispatch = useDispatch();
 
@@ -22,19 +29,23 @@ export const Dashboard = () => {
   }));
 
   const transactions = useSelector((state) => state.transactions.transactions);
+  const searchResults = useSelector(
+    (state) => state.transactions.searchResults
+  );
 
   React.useEffect(() => {
     dispatch({ type: sagaActions.FETCH_TRANSACTIONS });
   }, []);
 
   React.useEffect(() => {
-    if (summaryData) setSummary(summaryData);
+    if (
+      summaryData &&
+      (!summary ||
+        summaryData.totalExpense !== summary.totalExpense ||
+        summaryData.totalIncome !== summary.totalIncome)
+    )
+      setSummary(summaryData);
   }, [summaryData]);
-
-  const handleCreatButtonClick = () => {
-    setShowExpenseForm(true);
-    setIsCreateForm(true);
-  };
 
   React.useEffect(() => {
     if (transactions) {
@@ -44,8 +55,36 @@ export const Dashboard = () => {
     }
   }, [transactions]);
 
+  // React.useEffect(() => {
+  //   if (searchResults) {
+
+  //   }
+  // }, [searchResults]);
+
+  const handleCreatButtonClick = () => {
+    setShowExpenseForm(true);
+    setIsCreateForm(true);
+  };
+
+  const searchTransactions = React.useCallback(
+    debounce((searchQuery) => {
+      if (searchQuery && searchQuery.length)
+        dispatch({
+          type: sagaActions.SEARCH_TRANSACTIONS,
+          payload: searchQuery,
+        });
+      else dispatch(setSearchResults(null));
+    }, 500),
+    []
+  );
+
   return (
     <div className="dashboard">
+      <Search
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        searchTransactions={searchTransactions}
+      />
       <div className="dashboard__controls">
         <Button variant="contained" onClick={handleCreatButtonClick}>
           Add new
@@ -64,7 +103,7 @@ export const Dashboard = () => {
 
         <TransactionsList
           setShowExpenseForm={setShowExpenseForm}
-          transactions={transactions}
+          transactions={searchResults ? searchResults : transactions}
         />
       </div>
     </div>
