@@ -91,7 +91,6 @@ export const Dashboard = () => {
         </Button>
       </div>
       <div className="transaction-container">
-        <TransactionSummary summaryData={summary} />
         {showExpenseForm ? (
           <TransactionForm
             isNew={isCreateForm}
@@ -100,6 +99,8 @@ export const Dashboard = () => {
         ) : (
           <></>
         )}
+
+        <TransactionSummary summaryData={summary} />
 
         <TransactionsList
           setShowExpenseForm={setShowExpenseForm}
