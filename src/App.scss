@@ -138,8 +138,8 @@
     top: 90vh;
     display: flex;
     flex-direction: column;
-    justify-content: end;
-    align-items: end;
+    justify-content: flex-end;
+    align-items: flex-end;
     z-index: 9;
 
     .add-new__button {
